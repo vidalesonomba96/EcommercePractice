@@ -1,0 +1,1154 @@
+/* src/styles/style.css */
+
+/* Basic Reset & Defaults */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    font-family: 'Inter', sans-serif; /* Matching Tailwind's typical default */
+}
+.auth-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+.auth-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.auth-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6; /* gray-100 */
+    color: #1f2937; /* gray-800 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+/* Basic Button Styles (if you don't have them) */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #4F46E5; /* Example primary color */
+    color: #fff;
+    border-color: #4F46E5
+}
+
+.btn-primary:hover {
+    background-color: #3d37a6;
+    border-color: #3d37a6;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+input {
+    font-family: inherit;
+}
+
+/* Utility Classes */
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;  /* px-4 */
+    padding-right: 1rem; /* px-4 */
+}
+
+
+.gradient-text {
+    background: linear-gradient(to right, #4F46E5, #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+/* Site Header */
+.site-header {
+    background-color: #ffffff; /* white */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem; /* h-20 */
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    color: #1f2937; /* gray-800 */
+    transition: color 0.3s ease;
+}
+.logo-link:hover {
+    color: #4f46e5; /* indigo-600 for hover (example) */
+}
+.logo-link:hover .logo-text {
+    opacity: 0.8;
+}
+
+.logo-image {
+    height: 2.5rem; /* h-10 */
+    margin-right: 0.75rem; /* mr-3 */
+}
+
+.logo-text {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    transition: opacity 0.3s ease;
+}
+
+.search-container-desktop {
+    flex-grow: 5; /* This allows it to take available space */
+    max-width: 32rem; /* This is what limits its maximum width */
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    display: none; /* Shown on lg screens via media query */
+    font-size: 25px; /* text-2xl for larger search input */
+    /* Adjusted for better alignment with the logo */
+    padding-left: 2px;
+}
+
+.search-form {
+    display: flex;
+    width: 100%;
+}
+
+.search-input {
+    padding: 0.625rem 1rem; /* From existing */
+    border: 1px solid #d1d5db; /* From existing */
+    border-right: none; /* Assuming it's always paired with a button that has the right border */
+    border-radius: 0.5rem 0 0 0.5rem; /* From existing */
+    outline: none; /* From existing */
+    font-size: 0.975rem; /* From existing, adjust if needed for desktop vs sidebar */
+    box-sizing: border-box; /* Ensures padding and border don't add to the width */
+    /* MODIFIED: Added 'width' to transition. Adjusted transition timing slightly. */
+    transition: width 0.35s ease-in-out, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Default state for the DESKTOP search input */
+.search-container-desktop .search-input {
+    width: 220px; /* Initial, smaller width for desktop */
+    /* If you had width: 100% on the general .search-input, this overrides it */
+}
+
+/* Focus state for the DESKTOP search input - it expands */
+.search-container-desktop .search-input:focus {
+    width: 290px; /* Expanded width on focus. Adjust as needed within its container's max-width. */
+    /* The border-color and box-shadow will be inherited from the general .search-input:focus below,
+       or you can re-specify them here if you want them different for desktop. */
+}
+
+/* SIDEBAR search input - ensure it takes full available width */
+.sidebar-search-form .search-input {
+    width: 100%; /* Overrides the specific width set for desktop search */
+}
+
+/* General focus styles for ALL search inputs (border color, shadow) */
+/* This rule will apply to both desktop and sidebar inputs on focus */
+.search-input:focus {
+    border-color: #4f46e5; /* focus:border-indigo-500 - from existing */
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5); /* focus:ring-2 - from existing */
+    /* Note: The 'width' property for focus is handled by the more specific
+       '.search-container-desktop .search-input:focus' for the desktop version.
+       The sidebar version doesn't change width on focus based on these rules. */
+}
+
+.search-button {
+    background-color: #4f46e5; /* bg-indigo-600 */
+    color: #ffffff;
+    padding: 0.625rem 1.5rem; /* px-6 py-2.5 (approx) */
+    border-radius: 0 0.5rem 0.5rem 0; /* rounded-r-lg */
+    transition: background-color 0.3s ease;
+}
+.search-button:hover {
+    background-color: #4338ca; /* hover:bg-indigo-700 */
+    
+}
+.search-button i {
+    display: block; /* Fixes potential alignment issues */
+}
+
+.nav-desktop {
+    display: none; /* Hidden by default, shown on lg screens */
+    align-items: center;
+}
+
+
+.nav-link {
+    color: #4b5563; /* gray-600 */
+    padding: 0.5rem 0.75rem; /* px-3 py-2 */
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    transition: color 0.3s ease, background-color 0.3s ease;
+    margin-left: 0.5rem; /* space-x-4 / sm:space-x-6 (simplified) */
+    
+    /* === ADDED/MODIFIED FOR ICON ALIGNMENT === */
+    display: inline-flex; /* Make the link a flex container */
+    align-items: center;  /* Align items (icon and text) vertically center */
+    /* ========================================== */
+}
+.nav-link:hover {
+    color: #4f46e5; /* hover:text-indigo-600 */
+}
+
+/* === ADDED FOR ICON SPACING WITHIN NAV-LINK === */
+.nav-link > i { /* Target direct children <i> tags within .nav-link */
+    margin-right: 0.3em; /* Adjust as needed for spacing, similar to .btn i */
+                            /* Using 'em' makes it relative to the font-size */
+}
+/* ============================================ */
+
+
+.btn {
+    padding: 0.625rem 1rem; /* px-4 py-2.5 (approx) */
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 600; /* font-semibold */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+    /* transition-all duration-300 ease-in-out was here, ensure it or individual transitions are on .nav-link too */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Ensure .btn also has appropriate transition properties */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.btn i { /* This rule already exists and is good for buttons */
+    margin-right: 0.25rem; /* mr-1 */
+}
+
+.btn-sell {
+    background-color: #22c55e; /* bg-green-500 */
+    color: #ffffff;
+}
+.btn-sell:hover {
+    background-color: #16a34a; /* hover:bg-green-600 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(79, 70, 229, 0.1); /* shadow-sm + hover effect */
+    transition: 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+.btn-signup {
+    color: #4f46e5; /* text-indigo-600 */
+    border: 1px solid #4f46e5; /* border-indigo-600 */
+    width: 6rem; 
+    transition: transform 0.2s;
+
+}
+.btn-signup:active {
+    transform: scale(0.95); 
+}
+
+.btn-signup:hover {
+    background-color: #4f46e5; /* hover:bg-indigo-600 */
+    color: #ffffff; /* hover:text-white */
+    border-color: #4f46e5; /* hover:border-indigo-600 */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(79, 70, 229, 0.1); /* shadow-sm + hover effect */
+    transition: 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+.cart-link {
+    position: relative;
+}
+.cart-link i {
+    font-size: 1.25rem; /* text-xl */
+}
+.cart-badge {
+    position: absolute;
+    top: -0.2rem;      /* Adjusted for better visual */
+    right: -0.3rem;    /* Adjusted for better visual */
+    background-color: #ef4444; /* bg-red-500 */
+    color: #ffffff;
+    font-size: 0.7rem; /* text-xs */
+    font-weight: 700; /* font-bold */
+    border-radius: 9999px; /* rounded-full */
+    height: 1.25rem; /* h-5 */
+    width: 1.25rem; /* w-5 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-toggle-container {
+    display: block; /* Shown by default, hidden on lg screens */
+}
+.menu-toggle-button {
+    color: #1f2937; /* gray-800 */
+    padding: 0.5rem; /* p-2 */
+}
+.menu-toggle-button:hover {
+    color: #4f46e5; /* hover:text-indigo-600 */
+}
+.menu-toggle-button i {
+    font-size: 1.5rem; /* text-2xl */
+    display: block;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 18rem; /* w-72 */
+    background-color: #ffffff; /* bg-white */
+    box-shadow: -0.5rem 0 1.5rem rgba(0,0,0,0.15); /* shadow-2xl (approx) */
+    z-index: 50;
+    padding: 1.5rem; /* p-6 */
+    transform: translateX(100%); /* Initially off-screen */
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
+    display: block; /* Hidden by default for lg, controlled by JS logic too */
+}
+.sidebar.sidebar-open {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem; /* mb-8 */
+}
+.sidebar-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700; /* font-bold */
+}
+.sidebar-close-button {
+    color: #4b5563; /* gray-600 */
+    padding: 0.5rem; /* p-2 */
+}
+.sidebar-close-button:hover {
+    color: #4f46e5; /* hover:text-indigo-600 */
+}
+.sidebar-close-button i {
+    font-size: 1.5rem; /* text-2xl */
+    display: block;
+}
+
+.sidebar-search-form {
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-nav-link {
+    color: #374151; /* gray-700 */
+    padding: 0.75rem 0.75rem; /* px-3 py-2 (approx) */
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 1rem; /* text-base */
+    font-weight: 500; /* font-medium */
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem; /* space-y-3 (approx) */
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+.sidebar-nav-link:hover {
+    color: #4f46e5; /* hover:text-indigo-600 */
+    background-color: #f3f4f6; /* Example hover background */
+}
+.sidebar-nav-link i {
+    margin-right: 0.75rem; /* space-x-3 */
+    width: 20px; /* For alignment */
+    text-align: center;
+}
+.sidebar-nav-link.btn { /* For Sell and Sign Up buttons in sidebar */
+    justify-content: center;
+    padding: 0.625rem 1rem; /* Re-apply button padding */
+}
+.sidebar-nav-link.btn i {
+    margin-right: 0.5rem; /* space-x-2 */
+    
+}
+.sidebar-nav-link.btn-signup {
+    
+    width: 240px;
+}
+.sidebar-nav-link.btn-signup:hover {
+    background-color: #4f46e5; /* hover:bg-indigo-600 */
+    color: #ffffff; /* hover:text-white */
+    border-color: #4f46e5; /* hover:border-indigo-600 */
+}
+
+.cart-link-sidebar {
+    position: relative;
+}
+.cart-link-sidebar .cart-badge {
+    top: 13px; /* Adjust for sidebar link size */
+    right: 0.25rem;
+    margin-left: auto; /* Push badge to the right if text is short */
+}
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* bg-black opacity-50 */
+    z-index: 40;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+.sidebar-overlay.sidebar-overlay-visible {
+    opacity: 1; /* Tailwind's opacity-50 is actually on bg-black, here it's just opacity */
+    visibility: visible;
+}
+
+body.overflow-hidden-sidebar {
+    overflow: hidden;
+}
+
+/* Main Content */
+.site-main {
+    flex-grow: 1;
+}
+
+.features-section {
+    padding-top: 3rem;    /* py-12 sm:py-16 */
+    padding-bottom: 3rem; /* py-12 sm:py-16 */
+    background-color: #4338ca; /* bg-indigo-700 (approx) */
+    color: #ffffff;
+}
+.section-title {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    text-align: center;
+    margin-bottom: 3rem; /* mb-12 */
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* grid-cols-1 */
+    gap: 2rem; /* gap-8 sm:gap-10 */
+    text-align: center;
+}
+
+.feature-card {
+    padding: 1.5rem; /* p-6 */
+    background-color: #4f46e5; /* bg-indigo-600 (approx) */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-lg */
+}
+.feature-icon {
+    font-size: 3rem; /* text-5xl */
+    margin-bottom: 1rem; /* mb-4 */
+}
+.feature-icon-secure { color: #4ade80; } /* text-green-400 */
+.feature-icon-community { color: #facc15; } /* text-yellow-400 */
+.feature-icon-easy { color: #f472b6; } /* text-pink-400 */
+
+.feature-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 600; /* font-semibold */
+    margin-bottom: 0.5rem; /* mb-2 */
+}
+.feature-description {
+    color: #c7d2fe; /* text-indigo-200 */
+}
+
+/* Footer */
+.site-footer {
+    background-color: #111827; /* bg-gray-900 */
+    color: #d1d5db; /* text-gray-300 */
+    padding-top: 3rem;    /* py-12 sm:py-16 */
+    padding-bottom: 3rem; /* py-12 sm:py-16 */
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem; /* gap-8 */
+    margin-bottom: 2rem; /* mb-8 */
+}
+
+.footer-heading {
+    font-size: 1.125rem; /* text-lg for column titles, text-xl for main logo */
+    font-weight: 600; /* font-semibold */
+    color: #ffffff;
+    margin-bottom: 1rem; /* mb-4 */
+}
+.footer-about .footer-heading { /* Main logo text in footer */
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 700; /* font-bold */
+}
+
+.footer-about p {
+    font-size: 0.875rem; /* text-sm */
+    margin-bottom: 1.5rem; /* For spacing before social links */
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem; /* space-x-4 */
+}
+.social-link {
+    color: #9ca3af; /* text-gray-400 */
+    transition: color 0.3s ease;
+}
+.social-link:hover {
+    color: #ffffff; /* hover:text-white */
+}
+.social-link i {
+    font-size: 1.25rem; /* text-xl */
+}
+
+.footer-links-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* space-y-2 */
+}
+.footer-links-column li a {
+    font-size: 0.875rem; /* text-sm */
+    transition: color 0.3s ease;
+}
+.footer-links-column li a:hover {
+    color: #818cf8; /* hover:text-indigo-400 */
+}
+
+.footer-bottom {
+    border-top: 1px solid #374151; /* border-gray-700 */
+    padding-top: 2rem; /* pt-8 */
+    text-align: center;
+    font-size: 0.875rem; /* text-sm */
+}
+.footer-bottom p:last-child {
+    margin-top: 0.25rem; /* mt-1 */
+}
+.footer-bottom a {
+    transition: color 0.3s ease;
+}
+.footer-bottom a:hover {
+    color: #818cf8; /* hover:text-indigo-400 */
+}
+
+
+/* Responsive Design - Media Queries */
+
+/* Small screens and up (sm: 640px) */
+@media (min-width: 640px) {
+    .container {
+        padding-left: 1.5rem;  /* sm:px-6 */
+        padding-right: 1.5rem; /* sm:px-6 */
+    }
+    .logo-image {
+        height: 3rem; /* sm:h-12 */
+        margin-right: 0.75rem; /* sm:mr-3 */
+    }
+    .nav-desktop { /* For nav link spacing consistency */
+        gap: 0.75rem; /* sm:space-x-6 (approx) */
+    }
+    .features-section, .site-footer { /* Match Tailwind's sm:py-16 */
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+    .features-grid {
+        gap: 2.5rem; /* sm:gap-10 */
+    }
+}
+
+/* Medium screens and up (md: 768px) */
+@media (min-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
+    }
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+    }
+}
+
+/* Large screens and up (lg: 1024px) */
+@media (min-width: 1024px) {
+    .container {
+        padding-left: 2rem;  /* lg:px-8 */
+        padding-right: 2rem; /* lg:px-8 */
+        max-width: 1280px; /* Default max-width for Tailwind's container at lg+ */
+    }
+    .search-container-desktop {
+        display: flex;
+    }
+    .nav-desktop {
+        display: flex;
+    }
+    .menu-toggle-container {
+        display: none;
+    }
+    .sidebar {
+        display: none; /* Sidebar is hidden on large screens */
+    }
+    .sidebar-overlay {
+        display: none !important; /* Ensure overlay is also hidden */
+    }
+    /* If sidebar was open and screen resizes to lg, remove body lock */
+    body.overflow-hidden-sidebar {
+        overflow: auto;
+    }
+    .footer-grid {
+        grid-template-columns: repeat(4, 1fr); /* lg:grid-cols-4 */
+    }
+}
+/* === Authentication Page Styles === */
+.auth-page .site-main {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.auth-section {
+    width: 100%;
+}
+
+.auth-form-container {
+    max-width: 450px;
+    margin: 2rem auto;
+    padding: 2rem 2.5rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-lg */
+}
+
+.auth-title {
+    font-size: 1.75rem; /* text-2xl */
+    font-weight: 700; /* font-bold */
+    text-align: center;
+    margin-bottom: 2rem; /* mb-8 */
+    color: #374151; /* gray-700 */
+}
+
+.auth-form .form-group {
+    margin-bottom: 1.25rem; /* mb-5 */
+}
+
+.auth-form label {
+    display: block;
+    font-weight: 500; /* font-medium */
+    color: #374151; /* gray-700 */
+    margin-bottom: 0.5rem; /* mb-2 */
+    font-size: 0.875rem; /* text-sm */
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem; /* py-3 px-4 */
+    border: 1px solid #d1d5db; /* border-gray-300 */
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 0.975rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+    outline: none;
+    border-color: #4f46e5; /* focus:border-indigo-500 */
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5); /* focus:ring-2 */
+}
+
+.auth-form .form-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* space-x-2 */
+}
+
+.auth-form .form-group-inline input[type="checkbox"] {
+    width: 1rem; /* h-4 w-4 */
+    height: 1rem;
+    border-radius: 0.25rem; /* rounded */
+    border-color: #d1d5db; /* border-gray-300 */
+    accent-color: #4f46e5; /* indigo-600 */
+}
+.auth-form .form-group-inline input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5); /* focus:ring-2 */
+}
+
+
+.auth-form .form-group-inline label {
+    margin-bottom: 0;
+    font-weight: 400; /* font-normal */
+    color: #4b5563; /* gray-600 */
+}
+.auth-form .form-group-inline label a {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+.auth-form .form-group-inline label a:hover {
+    color: #4338ca;
+}
+
+
+.btn-submit-auth {
+    width: 100%;
+    padding: 0.875rem 1.5rem; /* py-3.5 px-6 */
+    font-size: 1rem; /* text-base */
+    font-weight: 600; /* font-semibold */
+    background-color: #4f46e5; /* bg-indigo-600 */
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem; /* rounded-lg */
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn-submit-auth:hover {
+    background-color: #4338ca; /* hover:bg-indigo-700 */
+}
+.btn-submit-auth:active {
+    transform: translateY(1px);
+}
+
+.auth-links {
+    margin-top: 1.5rem; /* mt-6 */
+    text-align: center;
+    font-size: 0.875rem; /* text-sm */
+    color: #4b5563; /* gray-600 */
+}
+
+.auth-links a {
+    color: #4f46e5; /* text-indigo-600 */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+    color: #4338ca; /* hover:text-indigo-700 */
+}
+.auth-links p {
+    margin-top: 0.5rem;
+}
+
+/* Ensure nav links in header are vertically centered if they wrap */
+.nav-desktop .nav-link, .nav-desktop .btn {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap; /* Prevents wrapping for simple links */
+}
+/* If you want the .btn-signup to not grow too wide on desktop nav */
+.nav-desktop .btn-signup {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    min-width: auto; /* override the general .btn-signup width if it's too large for nav */
+}
+/* === Dark Mode Styles === */
+
+/* Dark Mode Variables (optional but good for consistency) */
+body.dark-mode {
+    --dm-bg-primary: #1a1a1a;
+    --dm-bg-secondary: #242424;
+    --dm-bg-tertiary: #2c2c2c; /* For cards, inputs */
+    --dm-text-primary: #e0e0e0;
+    --dm-text-secondary: #b0b0b0;
+    --dm-border-color: #444444;
+    --dm-brand-primary: #7067f0; /* A slightly lighter/adjusted indigo for dark bg */
+    --dm-brand-secondary: #a39ff3;
+    --dm-link-hover: #c1bef7;
+    --dm-shadow-color: rgba(255, 255, 255, 0.05);
+    --dm-feature-icon-secure: #5ee691; /* Adjusted green */
+    --dm-feature-icon-community: #fce070; /* Adjusted yellow */
+    --dm-feature-icon-easy: #f78ec2; /* Adjusted pink */
+    --dm-btn-sell-bg: #3aa565; /* Darker green for sell button */
+    --dm-btn-sell-hover-bg: #2f8b53;
+}
+
+body.dark-mode {
+    background-color: var(--dm-bg-primary, #1a1a1a);
+    color: var(--dm-text-primary, #e0e0e0);
+}
+
+/* Header & Footer */
+body.dark-mode .site-header {
+    background-color: var(--dm-bg-secondary, #242424);
+    box-shadow: 0 4px 6px -1px var(--dm-shadow-color), 0 2px 4px -1px var(--dm-shadow-color);
+}
+
+body.dark-mode .logo-link {
+    /* color: var(--dm-text-primary, #e0e0e0); Text color is inherited */
+}
+body.dark-mode .logo-link:hover .logo-text { /* If you use logo-text */
+    opacity: 0.9;
+}
+/* Gradient text might need adjustment or can remain as is if contrast is okay */
+body.dark-mode .gradient-text {
+     /* background: linear-gradient(to right, var(--dm-brand-primary), var(--dm-brand-secondary));
+    -webkit-background-clip: text;
+    background-clip: text; */
+    /* Keep original or adjust if needed. For now, let's keep original */
+}
+
+
+body.dark-mode .search-input {
+    background-color: var(--dm-bg-tertiary, #2c2c2c);
+    border-color: var(--dm-border-color, #444444);
+    color: var(--dm-text-primary, #e0e0e0);
+}
+body.dark-mode .search-input::placeholder {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .search-input:focus {
+    border-color: var(--dm-brand-primary, #7067f0);
+    box-shadow: 0 0 0 2px rgba(112, 103, 240, 0.5); /* Adjusted shadow color */
+}
+
+body.dark-mode .search-button {
+    background-color: var(--dm-brand-primary, #7067f0);
+    color: var(--dm-text-primary, #e0e0e0); /* Or white if contrast is better */
+}
+body.dark-mode .search-button:hover {
+    background-color: var(--dm-link-hover, #c1bef7);
+}
+
+body.dark-mode .nav-link {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .nav-link:hover {
+    color: var(--dm-brand-primary, #7067f0);
+}
+
+body.dark-mode .btn-sell {
+    background-color: var(--dm-btn-sell-bg, #3aa565);
+    color: #ffffff;
+}
+body.dark-mode .btn-sell:hover {
+    background-color: var(--dm-btn-sell-hover-bg, #2f8b53);
+}
+
+body.dark-mode .btn-signup {
+    color: var(--dm-brand-primary, #7067f0);
+    border-color: var(--dm-brand-primary, #7067f0);
+}
+body.dark-mode .btn-signup:hover {
+    background-color: var(--dm-brand-primary, #7067f0);
+    color: #ffffff;
+}
+body.dark-mode .cart-badge {
+    /* Assuming current red badge is fine on dark mode */
+}
+
+body.dark-mode .menu-toggle-button,
+body.dark-mode .dark-mode-toggle-btn { /* For mobile header toggle too */
+    color: var(--dm-text-secondary, #b0b0b0);
+    background: none;
+    border: none;
+}
+body.dark-mode .menu-toggle-button:hover,
+body.dark-mode .dark-mode-toggle-btn:hover {
+    color: var(--dm-brand-primary, #7067f0);
+}
+.dark-mode-toggle-btn { /* Style for all toggle buttons */
+    padding: 0.5rem; /* Match .nav-link or .menu-toggle-button padding */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem; /* Adjust as needed */
+}
+.nav-desktop .dark-mode-toggle-btn i { /* Ensure icon size matches other nav icons */
+    font-size: 1.25rem; /* Match .cart-link i */
+}
+.menu-toggle-container .dark-mode-toggle-btn i {
+    font-size: 1.5rem; /* Match .menu-toggle-button i */
+}
+
+
+/* Sidebar */
+body.dark-mode .sidebar {
+    background-color: var(--dm-bg-secondary, #242424);
+    box-shadow: -0.5rem 0 1.5rem var(--dm-shadow-color);
+    color: var(--dm-text-primary, #e0e0e0);
+}
+body.dark-mode .sidebar-close-button {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .sidebar-close-button:hover {
+    color: var(--dm-brand-primary, #7067f0);
+}
+body.dark-mode .sidebar-nav-link {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .sidebar-nav-link:hover {
+    color: var(--dm-brand-primary, #7067f0);
+    background-color: var(--dm-bg-tertiary, #2c2c2c);
+}
+body.dark-mode .sidebar-nav-link.btn-sell {
+    /* Styles from .btn-sell will apply, then these specific overrides */
+    background-color: var(--dm-btn-sell-bg, #3aa565);
+    color: #ffffff;
+}
+body.dark-mode .sidebar-nav-link.btn-sell:hover {
+    background-color: var(--dm-btn-sell-hover-bg, #2f8b53);
+}
+body.dark-mode .sidebar-nav-link.btn-signup {
+    color: var(--dm-brand-primary, #7067f0);
+    border-color: var(--dm-brand-primary, #7067f0);
+}
+body.dark-mode .sidebar-nav-link.btn-signup:hover {
+    background-color: var(--dm-brand-primary, #7067f0);
+    color: #ffffff;
+}
+body.dark-mode .sidebar-overlay {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+}
+
+
+/* Main Content - Features Section (index.html) */
+body.dark-mode .features-section {
+    background-color: #3a30a0; /* Slightly adjusted indigo for dark mode */
+    /* Text color is already white, should be fine */
+}
+body.dark-mode .feature-card {
+    background-color: #473cae; /* Slightly adjusted indigo for dark mode */
+    box-shadow: 0 10px 15px -3px var(--dm-shadow-color), 0 4px 6px -2px var(--dm-shadow-color);
+}
+body.dark-mode .feature-description {
+    color: #d1cff0; /* Lighter indigo text for readability */
+}
+body.dark-mode .feature-icon-secure { color: var(--dm-feature-icon-secure, #5ee691); }
+body.dark-mode .feature-icon-community { color: var(--dm-feature-icon-community, #fce070); }
+body.dark-mode .feature-icon-easy { color: var(--dm-feature-icon-easy, #f78ec2); }
+
+
+/* About Us Page Specifics (about.html) */
+/* Overriding inline styles is tricky, use !important if necessary or remove inline styles */
+body.dark-mode .about-us-section {
+    background-color: var(--dm-bg-primary, #1a1a1a) !important;
+}
+body.dark-mode .about-content {
+    background-color: var(--dm-bg-tertiary, #2c2c2c) !important;
+    color: var(--dm-text-primary, #e0e0e0);
+    box-shadow: 0 4px 6px -1px var(--dm-shadow-color), 0 2px 4px -1px var(--dm-shadow-color);
+}
+body.dark-mode .about-us-section .section-title {
+    color: var(--dm-text-primary, #e0e0e0) !important; /* Override inline style from .section-title if any */
+}
+body.dark-mode .about-content p, body.dark-mode .about-content li div p {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .about-content h2.gradient-text, body.dark-mode .about-content h4 {
+    /* Gradient text for h2 should work, h4 will inherit general text color */
+    /* If specific h4 color is needed: */
+    /* color: var(--dm-text-primary, #e0e0e0); */
+}
+body.dark-mode .about-content .fas { /* Icon colors in About Us list */
+    /* These already have specific colors, may need adjustment if they don't show well */
+}
+
+
+/* Footer (already dark, adjust text if needed) */
+body.dark-mode .site-footer {
+    background-color: #0d1117; /* Even darker for footer */
+    color: var(--dm-text-secondary, #a0a0a0);
+}
+body.dark-mode .footer-heading {
+    color: var(--dm-text-primary, #e0e0e0);
+}
+body.dark-mode .social-link {
+    color: var(--dm-text-secondary, #a0a0a0);
+}
+body.dark-mode .social-link:hover {
+    color: var(--dm-brand-primary, #7067f0);
+}
+body.dark-mode .footer-links-column li a:hover {
+    color: var(--dm-brand-primary, #7067f0);
+}
+body.dark-mode .footer-bottom {
+    border-top-color: var(--dm-border-color, #333);
+}
+body.dark-mode .footer-bottom a:hover {
+    color: var(--dm-brand-primary, #7067f0);
+}
+
+/* Authentication Pages (login.html, register.html) */
+body.dark-mode .auth-form-container {
+    background-color: var(--dm-bg-tertiary, #2c2c2c);
+    box-shadow: 0 10px 15px -3px var(--dm-shadow-color), 0 4px 6px -2px var(--dm-shadow-color);
+}
+body.dark-mode .auth-title {
+    color: var(--dm-text-primary, #e0e0e0);
+}
+body.dark-mode .auth-form label {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .auth-form input[type="text"],
+body.dark-mode .auth-form input[type="email"],
+body.dark-mode .auth-form input[type="password"] {
+    background-color: var(--dm-bg-secondary, #242424);
+    border-color: var(--dm-border-color, #444444);
+    color: var(--dm-text-primary, #e0e0e0);
+}
+body.dark-mode .auth-form input[type="text"]:focus,
+body.dark-mode .auth-form input[type="email"]:focus,
+body.dark-mode .auth-form input[type="password"]:focus {
+    border-color: var(--dm-brand-primary, #7067f0);
+    box-shadow: 0 0 0 2px rgba(112, 103, 240, 0.5);
+}
+body.dark-mode .auth-form .form-group-inline label {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .auth-form .form-group-inline label a {
+    color: var(--dm-brand-primary, #7067f0);
+}
+body.dark-mode .auth-form .form-group-inline label a:hover {
+    color: var(--dm-link-hover, #c1bef7);
+}
+body.dark-mode .btn-submit-auth {
+    background-color: var(--dm-brand-primary, #7067f0);
+    color: #ffffff; /* Ensure good contrast */
+}
+body.dark-mode .btn-submit-auth:hover {
+    background-color: var(--dm-link-hover, #c1bef7);
+}
+body.dark-mode .auth-links {
+    color: var(--dm-text-secondary, #b0b0b0);
+}
+body.dark-mode .auth-links a {
+    color: var(--dm-brand-primary, #7067f0);
+}
+body.dark-mode .auth-links a:hover {
+    color: var(--dm-link-hover, #c1bef7);
+}
+
+/* Ensure checkbox is visible in dark mode */
+body.dark-mode .auth-form .form-group-inline input[type="checkbox"] {
+    border-color: var(--dm-border-color, #444444);
+    accent-color: var(--dm-brand-primary, #7067f0); /* For the checkmark itself */
+}
+body.dark-mode .auth-form .form-group-inline input[type="checkbox"]:focus {
+    box-shadow: 0 0 0 2px rgba(112, 103, 240, 0.5); /* Adjusted shadow color */
+}
+/* === New Arrivals Section === */
+.new-arrivals-section {
+    padding: 4rem 0;
+    background-color: #f9f9f9; /* Light background to make it stand out */
+}
+
+.new-arrivals-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 0.75rem; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* To contain rounded corners of image */
+}
+
+.banner-content {
+    padding: 3rem;
+}
+
+.banner-title {
+    font-size: 2.25rem; /* Larger, prominent title */
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.banner-description {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.banner-image {
+    width: 100%;
+    height: auto;
+}
+
+.banner-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image fills the container without distortion */
+}
+
+/* Adjust button styles if needed for better prominence */
+.btn-primary.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .new-arrivals-banner {
+        grid-template-columns: 1fr; /* Stack content and image on smaller screens */
+    }
+
+    .banner-image {
+        order: -1; /* Move image above content on smaller screens */
+        margin-bottom: 1.5rem;
+    }
+
+    .banner-content {
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .banner-title {
+        font-size: 1.75rem;
+    }
+
+    .banner-description {
+        font-size: 0.9rem;
+    }
+}
